@@ -12,7 +12,7 @@ class RuteController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
