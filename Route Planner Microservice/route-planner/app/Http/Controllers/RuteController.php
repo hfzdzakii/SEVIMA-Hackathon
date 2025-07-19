@@ -69,7 +69,13 @@ class RuteController extends Controller
      */
     public function edit(rute $rute)
     {
-        return view('rute.edit', compact('rute'));
+        $nama_haltes = bus_stop::orderby('id', 'asc')->get();
+        $kamus = [];
+        foreach ($nama_haltes as $halte) {
+            $kamus[$halte->id] = $halte->bus_stop_name;
+        }
+        dd($nama_haltes);
+        return view('rute.edit', compact('nama_haltes', 'rute', 'kamus'));
     }
 
     /**

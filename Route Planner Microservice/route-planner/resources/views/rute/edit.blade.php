@@ -12,24 +12,25 @@
     <form action="{{ route('rute.update', $rute) }}" method="POST">
         @csrf
         @method('PUT')
-        Painter Name:
+        Halte 1 :
         <select name="stop_1">
-            <option value="">Choose Painter Name</option>
-            @foreach ($datas as $data)
-            <option value="{{ $data->id }}" {{ $painting->id_painter == $data->id ? 'selected' : ''}}>{{ $data->name }}</option>
+            <option value="">Pilih nama halte 1</option>
+            @foreach ($nama_haltes as $data)
+            <option value="{{ $data->id }}" {{ old('stop_1') == $data->stop_1 ? 'selected' : '' }}>{{ $data->but_stop_name }}</option> {{-- $kamus[$rute->stop_1] --}}
             @endforeach
         </select>
         <br>
-        Painting Name:
-        <input type="text" value="{{ $painting->name }}" name="name">
+        Halte 2 :
+        <select name="stop_2">
+            <option value="">Pilih nama halte 2</option>
+            @foreach ($nama_haltes as $data)
+            <option value="{{ $data->id }}" {{ old('stop_2') == $data->stop_2 ? 'selected' : '' }}>{{ $kamus[$rute->stop_2] }}</option>
+            @endforeach
+        </select>
         <br>
-        Year:
-        <input type="number" value="{{ $painting->year }}" name="year">
+        Jarak :<input value="{{ old('distance') }}" type="number" name="distance">
         <br>
-        Description:
-        <textarea name="description" cols="30" rows="10">{{ $painting->description }}</textarea>
-        <br>
-        <button type="submit">Edit</button>
+        <button type="submit">Tambah</button>
     </form>
     @if (session('fail'))
     {{ session('fail') }}
