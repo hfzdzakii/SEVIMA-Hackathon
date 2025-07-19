@@ -12,7 +12,8 @@ class RuteController extends Controller
      */
     public function index()
     {
-        
+        $datas = rute::orderby('name', 'asc')->paginate(10);
+        return view('rute.index', compact('datas'));
     }
 
     /**
@@ -20,7 +21,7 @@ class RuteController extends Controller
      */
     public function create()
     {
-        //
+        return view('rute.create');
     }
 
     /**
@@ -28,7 +29,21 @@ class RuteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'stop_1' => 'required|string',
+            'stop_2' => 'required|string',
+            'distance' => 'required|numeric',
+        ]);
+        try {
+            rute::create([
+                'stop_1' => $request->stop_1,
+                'stop_2' => $request->stop_2,
+                'distance' => $request->distance,
+            ]);
+            return redirect()->route('rute.index')->with(['success' => 'Berhasil nambah data!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('rute.create')->with(['fail' => 'Gagal menambah data '.$th]);
+        }
     }
 
     /**
@@ -36,7 +51,7 @@ class RuteController extends Controller
      */
     public function show(rute $rute)
     {
-        //
+        return view('rute.show', compact('rute'));
     }
 
     /**
@@ -44,7 +59,7 @@ class RuteController extends Controller
      */
     public function edit(rute $rute)
     {
-        //
+        return view('rute.edit', compact('rute'));
     }
 
     /**
@@ -52,7 +67,21 @@ class RuteController extends Controller
      */
     public function update(Request $request, rute $rute)
     {
-        //
+        $request->validate([
+            'stop_1' => 'required|string',
+            'stop_2' => 'required|string',
+            'distance' => 'required|numeric',
+        ]);
+        try {
+            $rute->update([
+                'stop_1' => $request->stop_1,
+                'stop_2' => $request->stop_2,
+                'distance' => $request->distance,
+            ]);
+            return redirect()->route('rute.index')->with(['success' => 'Berhasil update data!']);
+        } catch (\Throwable $th) {
+            return redirect()->route('rute.edit', $rute)->with(['fail' => 'Gagal menambah data '.$th]);
+        }
     }
 
     /**
@@ -60,6 +89,7 @@ class RuteController extends Controller
      */
     public function destroy(rute $rute)
     {
-        //
+        $rute->delete();
+        return redirect()->route('rute.index')->with(['success' => 'Berhasil menghapus data']);
     }
 }
