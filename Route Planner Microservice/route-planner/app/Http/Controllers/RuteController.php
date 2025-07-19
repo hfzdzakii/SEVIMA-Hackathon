@@ -14,7 +14,12 @@ class RuteController extends Controller
     public function index()
     {
         $datas = rute::orderby('id', 'asc')->paginate(10);
-        return view('rute.index', compact('datas'));
+        $nama_haltes = bus_stop::orderby('id', 'asc')->get();
+        $kamus = [];
+        foreach ($nama_haltes as $halte) {
+            $kamus[$halte->id] = $halte->bus_stop_name;
+        }
+        return view('rute.index', compact(['datas', 'kamus']));
     }
 
     /**

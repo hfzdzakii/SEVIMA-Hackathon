@@ -25,14 +25,14 @@
         @forelse ($datas as $data)
             <tbody>
                 <tr>
+                    {{-- dd($nama_haltes[0]['id']); --}}
                     <td>{{ $datas->firstItem() + $loop->index }}</td>
-                    <td>{{ $data->stop_1 }}</td>
-                    <td>{{ $data->stop_2 }}</td>
+                    <td>{{ $kamus[$data->stop_1] }}</td>
+                    <td>{{ $kamus[$data->stop_2] }}</td>
                     <td>{{ $data->distance }}</td>
                     <form action="{{ route('rute.destroy', $data) }}" method="POST"
                         onsubmit="return confirm('Yakin?')">
                         <td>
-                            <a href="{{ route('rute.show', $data) }}">Show</a>
                             <a href="{{ route('rute.edit', $data) }}">Edit</a>
                             @csrf
                             @method('DELETE')
@@ -45,5 +45,6 @@
             <p>Kosong</p>
         @endforelse
     </table>
+    {{ $datas->links()}}
 </body>
 </html>
