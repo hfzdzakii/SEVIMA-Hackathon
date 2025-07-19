@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('rutes', function (Blueprint $table) {
             $table->id();
-            $table->char('stop_1', 10);
-            $table->char('stop_2', 10);
+            $table->text('stop_1');
+            $table->text('stop_2');
             $table->integer('distance');
+            $table->timestamps();
         });
     }
 

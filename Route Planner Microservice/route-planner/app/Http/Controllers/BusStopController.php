@@ -55,7 +55,7 @@ class BusStopController extends Controller
      */
     public function edit(bus_stop $bus_stop)
     {
-        return view('bus-stop.edit', compact('bus_stop'));
+        return view('bus_stop.edit', compact('bus_stop'));
     }
 
     /**

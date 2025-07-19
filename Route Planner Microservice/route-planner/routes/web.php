@@ -9,4 +9,4 @@ Route::resource('/rute', RuteController::class);
 
 Route::get('/', function () {
     return view('main');
-});
+})->name('main');

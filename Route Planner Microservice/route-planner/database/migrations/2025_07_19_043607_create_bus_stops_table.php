@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('bus_stops', function (Blueprint $table) {
             $table->id();
-            $table->char('bus_stop_name', 10);
+            $table->text('bus_stop_name');
+            $table->timestamps();
         });
     }
 

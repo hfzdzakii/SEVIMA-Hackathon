@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bus_stop;
 use App\Models\rute;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class RuteController extends Controller
      */
     public function index()
     {
-        $datas = rute::orderby('name', 'asc')->paginate(10);
+        $datas = rute::orderby('id', 'asc')->paginate(10);
         return view('rute.index', compact('datas'));
     }
 
@@ -21,7 +22,8 @@ class RuteController extends Controller
      */
     public function create()
     {
-        return view('rute.create');
+        $bis_datas = bus_stop::orderby('bus_stop_name', 'asc')->get();
+        return view('rute.create', compact('bis_datas'));
     }
 
     /**
@@ -34,6 +36,9 @@ class RuteController extends Controller
             'stop_2' => 'required|string',
             'distance' => 'required|numeric',
         ]);
+        if ($request->stop_1 == $request->stop_2) {
+            return redirect()->route('rute.create')->with(['fail' => 'Halte 1 dan Halte 2 tidak boleh sama']);
+        }
         try {
             rute::create([
                 'stop_1' => $request->stop_1,
